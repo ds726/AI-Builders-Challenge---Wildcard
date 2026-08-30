@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fiducia.ai — Chat</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="chat-header">
+    <a href="index.html" aria-label="Back to scenarios">← Back</a>
+    <span class="chat-scenario-title" id="scenarioTitle">Loading…</span>
+  </header>
+
+  <!-- Mental health disclaimer banner (shown only for mentalhealth scenario) -->
+  <div class="disclaimer-banner hidden" id="disclaimerBanner" role="alert">
+    <div class="disclaimer-banner-text">
+      <strong>Before you begin:</strong> This scenario covers mental health and wellbeing.
+      This app is not a substitute for professional support. If you need help now, please contact:
+      <a href="https://www.mind.org.uk" target="_blank" rel="noopener noreferrer">Mind</a>,
+      <a href="https://www.samaritans.org" target="_blank" rel="noopener noreferrer">Samaritans</a>, or
+      <a href="https://www.giveusashout.org" target="_blank" rel="noopener noreferrer">Shout</a>.
+    </div>
+    <button class="btn-dismiss" id="btnDismiss">I understand, continue</button>
+  </div>
+
+  <!-- Error message (hidden until needed) -->
+  <div class="error-msg hidden" id="errorMsg"></div>
+
+  <div class="chat-body" id="chatBody">
+    <div class="chat-messages" id="chatMessages" aria-live="polite" aria-label="Conversation">
+      <!-- Typing indicator -->
+      <div class="bubble-row" id="typingRow" style="display:none;">
+        <div class="bubble-col">
+          <div class="typing-indicator" id="typingIndicator">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-input-bar">
+      <textarea
+        class="chat-input"
+        id="chatInput"
+        rows="1"
+        placeholder="Type your message…"
+        aria-label="Your message"
+        disabled
+      ></textarea>
+      <div class="chat-actions">
+        <button class="btn btn--primary" id="btnSend" disabled>Send</button>
+        <button class="btn btn--danger" id="btnEnd">End Conversation</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/chat.js"></script>
+</body>
+</html>

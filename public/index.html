@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fiducia.ai</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1 class="site-title">fiducia.ai</h1>
+      <p class="site-tagline">Practise difficult workplace conversations in a safe, private space — powered by AI.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <p>Choose a scenario below to start a role-play session. The AI will act as your manager or colleague so you can rehearse the conversation before having it for real.</p>
+    </section>
+
+    <section class="scenarios" aria-label="Conversation scenarios">
+      <article class="card" role="button" tabindex="0" data-scenario="workload" aria-label="Talk to your manager about workload">
+        <div class="card-icon" aria-hidden="true">💼</div>
+        <h2 class="card-title">Workload &amp; Capacity</h2>
+        <p class="card-desc">Talk to your manager about feeling overloaded and work together to find a solution.</p>
+        <span class="card-cta">Start conversation →</span>
+      </article>
+
+      <article class="card card--sensitive" role="button" tabindex="0" data-scenario="mentalhealth" aria-label="Talk to your manager about mental health or burnout">
+        <div class="card-icon" aria-hidden="true">🧠</div>
+        <h2 class="card-title">Mental Health &amp; Burnout</h2>
+        <p class="card-desc">Talk to your manager about how you're feeling at work. Extra support information is available on this topic.</p>
+        <span class="card-cta">Start conversation →</span>
+        <span class="card-badge">Support resources included</span>
+      </article>
+
+      <article class="card" role="button" tabindex="0" data-scenario="conflict" aria-label="Resolve a conflict with a colleague">
+        <div class="card-icon" aria-hidden="true">🤝</div>
+        <h2 class="card-title">Colleague Conflict</h2>
+        <p class="card-desc">Resolve a disagreement with a colleague and practise finding common ground.</p>
+        <span class="card-cta">Start conversation →</span>
+      </article>
+    </section>
+  </main>
+
+  <aside class="disclaimer container" role="complementary" aria-label="Mental health support">
+    <div class="disclaimer-inner">
+      <strong>Mental health support:</strong> This app is not a substitute for professional mental health support.
+      If you are struggling, please reach out:
+      <a href="https://www.mind.org.uk" target="_blank" rel="noopener noreferrer">Mind</a> &bull;
+      <a href="https://www.samaritans.org" target="_blank" rel="noopener noreferrer">Samaritans</a> &bull;
+      <a href="https://www.giveusashout.org" target="_blank" rel="noopener noreferrer">Shout</a>
+    </div>
+  </aside>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>fiducia.ai &mdash; a safe space to practise.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.card').forEach(function (card) {
+      function navigate() {
+        var scenario = card.getAttribute('data-scenario');
+        window.location.href = 'chat.html?scenario=' + scenario;
+      }
+      card.addEventListener('click', navigate);
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          navigate();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

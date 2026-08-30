@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fiducia.ai — Reflection</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <header class="reflection-header">
+    <div class="container">
+      <h1>Your Conversation Reflection</h1>
+      <p>Here is your personalised feedback, action plan, and a draft message you can use.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Loading state -->
+    <div class="loading-state" id="loadingState">
+      <div class="spinner"></div>
+      <p>Analysing your conversation&hellip;</p>
+    </div>
+
+    <!-- Error state (hidden until needed) -->
+    <div class="error-msg hidden" id="errorMsg"></div>
+
+    <!-- Output sections (hidden until loaded) -->
+    <div class="reflection-sections hidden" id="reflectionSections">
+
+      <div class="section-card" id="cardReflection">
+        <h2>
+          Reflection
+          <button class="btn--copy" data-target="contentReflection">Copy</button>
+        </h2>
+        <div class="section-content" id="contentReflection"></div>
+      </div>
+
+      <div class="section-card" id="cardActionPlan">
+        <h2>
+          Action Plan
+          <button class="btn--copy" data-target="contentActionPlan">Copy</button>
+        </h2>
+        <div class="section-content" id="contentActionPlan"></div>
+      </div>
+
+      <div class="section-card" id="cardDraftMessage">
+        <h2>
+          Draft Message
+          <button class="btn--copy" data-target="contentDraftMessage">Copy</button>
+        </h2>
+        <div class="section-content" id="contentDraftMessage"></div>
+      </div>
+
+    </div>
+
+    <!-- Mental health resources panel (hidden until scenario = mentalhealth) -->
+    <div class="resources-panel hidden" id="resourcesPanel">
+      <strong>Mental health support resources</strong>
+      Remember: this app is not a substitute for professional mental health support.
+      If you are struggling, please reach out:
+      <a href="https://www.mind.org.uk" target="_blank" rel="noopener noreferrer">Mind</a> &bull;
+      <a href="https://www.samaritans.org" target="_blank" rel="noopener noreferrer">Samaritans</a> &bull;
+      <a href="https://www.giveusashout.org" target="_blank" rel="noopener noreferrer">Shout</a>
+    </div>
+
+    <!-- Start Again -->
+    <div class="reflection-footer">
+      <button class="btn btn--secondary" id="btnStartAgain">Start Again</button>
+    </div>
+
+  </main>
+
+  <script>
+    'use strict';
+
+    // -------------------------------------------------------------------------
+    // Read session data
+    // -------------------------------------------------------------------------
+    var rawMessages = sessionStorage.getItem('cc_messages');
+    var scenario    = sessionStorage.getItem('cc_scenario') || '';
+    var messages    = [];
+
+    try {
+      messages = rawMessages ? JSON.parse(rawMessages) : [];
+    } catch (e) {
+      messages = [];
+    }
+
+    // -------------------------------------------------------------------------
+    // DOM references
+    // -------------------------------------------------------------------------
+    var loadingState       = document.getElementById('loadingState');
+    var errorMsg           = document.getElementById('errorMsg');
+    var reflectionSections = document.getElementById('reflectionSections');
+    var resourcesPanel     = document.getElementById('resourcesPanel');
+    var btnStartAgain      = document.getElementById('btnStartAgain');
+
+    var contentReflection   = document.getElementById('contentReflection');
+    var contentActionPlan   = document.getElementById('contentActionPlan');
+    var contentDraftMessage = document.getElementById('contentDraftMessage');
+
+    // -------------------------------------------------------------------------
+    // Show MH resources panel if applicable
+    // -------------------------------------------------------------------------
+    if (scenario === 'mentalhealth') {
+      resourcesPanel.classList.remove('hidden');
+    }
+
+    // -------------------------------------------------------------------------
+    // Guard: if no transcript, show a clear error immediately
+    // -------------------------------------------------------------------------
+    if (!messages || messages.length === 0) {
+      showError('No conversation found. Please complete a chat session first.');
+      loadingState.classList.add('hidden');
+    } else {
+      fetchReflection();
+    }
+
+    // -------------------------------------------------------------------------
+    // Fetch reflection from the server
+    // -------------------------------------------------------------------------
+    function fetchReflection() {
+      fetch('/api/reflect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ scenario: scenario, messages: messages })
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          loadingState.classList.add('hidden');
+
+          if (data.error) {
+            showError(data.error);
+            return;
+          }
+
+          contentReflection.textContent   = data.reflection   || '';
+          contentActionPlan.textContent   = data.actionPlan   || '';
+          contentDraftMessage.textContent = data.draftMessage || '';
+
+          reflectionSections.classList.remove('hidden');
+        })
+        .catch(function () {
+          loadingState.classList.add('hidden');
+          showError('Could not reach the server. Please check your connection and try again.');
+        });
+    }
+
+    // -------------------------------------------------------------------------
+    // Copy buttons
+    // -------------------------------------------------------------------------
+    document.querySelectorAll('.btn--copy').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var targetId = btn.getAttribute('data-target');
+        var el = document.getElementById(targetId);
+        if (!el) return;
+
+        navigator.clipboard.writeText(el.textContent).then(function () {
+          var original = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(function () { btn.textContent = original; }, 1800);
+        }).catch(function () {
+          // Fallback for older browsers
+          var range = document.createRange();
+          range.selectNodeContents(el);
+          window.getSelection().removeAllRanges();
+          window.getSelection().addRange(range);
+          document.execCommand('copy');
+          window.getSelection().removeAllRanges();
+        });
+      });
+    });
+
+    // -------------------------------------------------------------------------
+    // Start Again
+    // -------------------------------------------------------------------------
+    btnStartAgain.addEventListener('click', function () {
+      sessionStorage.removeItem('cc_messages');
+      sessionStorage.removeItem('cc_scenario');
+      window.location.href = 'index.html';
+    });
+
+    // -------------------------------------------------------------------------
+    // Helpers
+    // -------------------------------------------------------------------------
+    function showError(msg) {
+      errorMsg.textContent = msg;
+      errorMsg.classList.remove('hidden');
+    }
+  </script>
+
+</body>
+</html>
