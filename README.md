@@ -18,7 +18,7 @@ fiducia.ai provides a structured role-play environment where users can rehearse 
 - **Mental health / burnout** - practise opening up about how you are feeling to a line manager
 - **Colleague conflict** - practise resolving a disagreement with a defensive colleague
 
-Each session ends with a post-conversation reflection that gives the user honest feedback on how they handled the conversation, a concrete action plan of next steps, and a formal draft email they can send straight away. No login is required and no conversation data is stored — everything lives in `sessionStorage` for the duration of the session only.
+Each session ends with a post-conversation reflection that gives the user honest feedback on how they handled the conversation, a concrete action plan of next steps, and a formal draft email they can send straight away. No login is required and no conversation data is stored - everything lives in `sessionStorage` for the duration of the session only. This is on purpose so that any conversations made by users with the chatbot stays completely confidential.
 
 ---
 
