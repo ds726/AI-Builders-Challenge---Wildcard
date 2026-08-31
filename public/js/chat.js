@@ -5,15 +5,15 @@
 // ---------------------------------------------------------------------------
 var SCENARIO_CONFIG = {
   workload: {
-    title: 'Workload & Capacity — Talk to Your Manager',
+    title: 'Workload & Capacity - Talk to Your Manager',
     persona: 'Your Manager'
   },
   mentalhealth: {
-    title: 'Mental Health & Burnout — Talk to Your Manager',
+    title: 'Mental Health & Burnout - Talk to Your Manager',
     persona: 'Your Manager'
   },
   conflict: {
-    title: 'Colleague Conflict — Talk to Your Colleague',
+    title: 'Colleague Conflict - Talk to Your Colleague',
     persona: 'Your Colleague'
   }
 };
