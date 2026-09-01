@@ -59,7 +59,7 @@ IBM Bob was used throughout the development of this project as an in-editor AI e
 - **Prompt engineering** - Bob was used to iteratively refine the system prompts for all three role-play personas, adding targeted instructions (such as the `CRITICAL OUTPUT RULE`) to prevent the model from breaking character or producing meta-commentary instead of in-character replies.
 - **Bug fixing** - Bob diagnosed and resolved issues including roleplay bleed in model output, premature truncation of the reflection JSON caused by `stop_sequences` matching transcript content, and incomplete JSON objects returned by repeated model output.
 - **Architecture decisions** - Bob advised on the two-stage pipeline design (separate chat and reflection endpoints), the `sessionStorage`-only data model, and the IAM token caching strategy.
-- **Code generation and clarification** - Bob wrote and refined the watsonx API integration, the JSON extraction logic in `/api/reflect`, and the client-side chat loop using its Agent mode. In Ask mode, Bob was able to answer questions about what it was doing in each step and why is this was necessary.
+- **Code generation and clarification** - Bob wrote and refined the watsonx API integration, the JSON extraction logic in `/api/reflect`, and the client-side chat loop using its Agent mode. In Ask mode, Bob was able to answer questions about what it was doing in each step and why this was necessary.
 - **README and documentation** - this README was structured and written with Bob's assistance.
 
 ---
