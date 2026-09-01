@@ -47,7 +47,7 @@ After the user ends the session, a second API call sends the full transcript to 
 
 ## Selected Challenge Theme
 
-**Wildcard** - fiducia.ai addresses workplace communication skills and psychological safety. It uses AI not just to automate a task but to create a safe space for humans to practise and improve, with the AI acting as a realistic but ultimately educational sparring partner. The production of a draft email ensures that users are not wasting time wondering what to send to seek a conversation and can instead spend this time on what really matters: working.
+**Wildcard** - fiducia.ai addresses workplace communication skills and psychological safety. It uses AI not just to automate a task but to create a safe space for humans to practise and improve, with the AI acting as a realistic but ultimately educational sparring partner. The production of a draft email ensures that users are not wasting time wondering what to send to seek a conversation and can instead spend this time on what really matters: completing their work.
 
 ---
 
